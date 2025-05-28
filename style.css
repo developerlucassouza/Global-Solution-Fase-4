@@ -1,0 +1,15 @@
+body {
+    background-color: black;
+}
+
+main.container {
+    background-color: white;
+    border-radius: 20px;
+    margin-top: 75px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+div.input-group {
+    width: 30%;
+}
