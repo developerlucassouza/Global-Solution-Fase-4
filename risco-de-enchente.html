@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risco de Enchente</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- CSS Próprio -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="modal" id="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Resultado do Cálculo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="texto"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <!-- <button type="button" class="btn btn-primary">Salvar mudanças</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+
+        <h1>Risco de Enchente</h1>
+
+        <p>As enchentes são eventos naturais que podem causar sérios danos à infraestrutura, ao meio ambiente e à
+            segurança das pessoas. Pensando nisso, desenvolvemos esta calculadora para estimar o nível de risco de
+            enchentes em uma determinada região, com base em variáveis como volume e intensidade da chuva, duração,
+            nível do rio e capacidade de drenagem do solo.</p>
+
+        <p>Ao preencher os dados, você terá uma avaliação rápida e prática do potencial de enchente, podendo se preparar
+            melhor para situações de emergência. Nossa ferramenta é educativa e preventiva, ajudando a promover maior
+            conscientização sobre os impactos das mudanças climáticas e a importância do planejamento urbano.</p>
+
+        <div class="input-group mb-3">
+            <input type="number" min="0" id="precipitacao" class="form-control" placeholder="Precipitação"
+                aria-label="Recipiente para nickname" aria-describedby="basic-addon2">
+
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2">mm</span>
+            </div>
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="number" min="0" id="duracao" class="form-control" placeholder="Duração das Chuvas"
+                aria-label="Recipiente para nickname" aria-describedby="basic-addon2">
+
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2">Horas</span>
+            </div>
+        </div>
+
+
+
+
+        <div class="input-group mb-3">
+
+            <input type="number" min="0" id="intensidade" class="form-control" placeholder="Instencidade das Chuvas"
+                aria-label="Recipiente para nickname" aria-describedby="basic-addon2">
+
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2">mm/hora</span>
+            </div>
+        </div>
+
+        <div class="input-group mb-3">
+
+            <input type="number" min="0" id="height" class="form-control" placeholder="Altura do Rio"
+                aria-label="Recipiente para nickname" aria-describedby="basic-addon2">
+
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2">m</span>
+            </div>
+        </div>
+
+        <div class="input-group mb-3" style="width: 50%;">
+
+            <input type="number" min="0" max="1" id="drenagem" class="form-control" placeholder="Drenagem do Solo"
+                aria-label="Recipiente para nickname" aria-describedby="basic-addon2">
+
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2">Coeficiente de Infiltração de 0 a 1</span>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="Calcular()">
+            Calcular
+        </button>
+
+        <a href="index.html" class="btn btn-secondary">Voltar</a>
+    </main>
+
+    <!-- jQuery/Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+    <!-- JS Próprio -->
+    <script src="script.js"></script>
+
+    <script>
+        function Calcular() {
+            let p = document.querySelector('#precipitacao').value;
+            let t = document.querySelector('#duracao').value;
+            let i = document.querySelector('#intensidade').value;
+            let h = document.querySelector('#height').value;
+            let d = document.querySelector('#drenagem').value;
+
+            document.querySelector('#precipitacao').value = '';
+            document.querySelector('#duracao').value = '';
+            document.querySelector('#intensidade').value = '';
+            document.querySelector('#height').value = '';
+            document.querySelector('#drenagem').value = '';
+
+            document.querySelector('#texto').innerHTML = Enchentes(p, t, i, h, d);
+            $('#modal').modal('show');
+        }
+    </script>
+
+</body>
+
+</html>
